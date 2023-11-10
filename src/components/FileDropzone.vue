@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import {
   MAX_FILE_COUNT,
   MAX_FILE_SIZE_MB,
@@ -9,10 +9,6 @@ import {
   isValidSize,
   isValidFileName
 } from '@/utils/validation'
-
-onMounted(() => {
-  console.log(import.meta.env.VITE_DELIVERY_ADDRESS)
-})
 
 const isDraggingOver = ref(false)
 const data = ref([])
