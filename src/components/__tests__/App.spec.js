@@ -1,17 +1,17 @@
 import { describe, it, expect, vi } from 'vitest'
 
 import { mount } from '@vue/test-utils'
-import FileDropzone from '../FileDropzone.vue'
+import App from '../../App.vue'
 
-describe('FileDropzone', () => {
+describe('App', () => {
   it('意図したテキストがレンダリングされること', () => {
-    const wrapper = mount(FileDropzone)
+    const wrapper = mount(App)
     expect(wrapper.text()).toContain('ファイルをここにドラッグ＆ドロップまたはファイルを選択')
   })
 
   describe('dragEnter', () => {
     it('dragEnterが呼び出されるとisDraggingOverの状態が変わること', async () => {
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       await wrapper.vm.dragEnter()
       expect(wrapper.vm.isDraggingOver).toBe(true)
@@ -20,7 +20,7 @@ describe('FileDropzone', () => {
 
   describe('dragLeave', () => {
     it('dragLeaveが呼び出されるとisDraggingOverの状態が変わること', async () => {
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       await wrapper.vm.dragLeave()
       expect(wrapper.vm.isDraggingOver).toBe(false)
@@ -29,7 +29,7 @@ describe('FileDropzone', () => {
 
   describe('handleFiles', () => {
     it('有効なファイルの場合、dataに保存されること', async () => {
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       const mockChangeEvent = {
         type: 'change',
@@ -54,7 +54,7 @@ describe('FileDropzone', () => {
 
     it('対応していない拡張子の場合、アラートが出ること', async () => {
       const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       const mockChangeEvent = {
         type: 'change',
@@ -72,7 +72,7 @@ describe('FileDropzone', () => {
 
     it('ファイルの添付数が3つ以上の場合、アラートが出ること', async () => {
       const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       const mockChangeEvent = {
         type: 'change',
@@ -98,7 +98,7 @@ describe('FileDropzone', () => {
 
     it('ファイルサイズが3MB以下の場合アラートは出ないこと', async () => {
       const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       // 3145728バイト(3MBのファイル)
       const dataSize = 3 * 1024 * 1024 + 1
@@ -121,7 +121,7 @@ describe('FileDropzone', () => {
 
     it('ファイルサイズが3MBより大きい場合アラートが出ること', async () => {
       const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       // 3145729(3MBバイト以上のファイル)
       const dataSize = 3 * 1024 * 1024 + 2
@@ -144,7 +144,7 @@ describe('FileDropzone', () => {
 
     it('ファイル名に使用できない文字が含まれている場合、アラートが出ること', async () => {
       const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       const mockChangeEvent = {
         type: 'change',
@@ -166,7 +166,7 @@ describe('FileDropzone', () => {
   describe('submitForm', () => {
     it('ファイルがない状態で送信した場合、アラートが出ること', async () => {
       const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {})
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
 
       await wrapper.vm.submitForm()
       expect(alertMock).toHaveBeenCalledWith('ファイルを選択してください。')
@@ -176,7 +176,7 @@ describe('FileDropzone', () => {
 
   describe('removeFile', () => {
     it('ファイルが削除されること', async () => {
-      const wrapper = mount(FileDropzone)
+      const wrapper = mount(App)
       const mockChangeEvent = {
         type: 'change',
         target: {
