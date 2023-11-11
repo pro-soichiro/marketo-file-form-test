@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+      href="/css/mktLPSupportCompat.css"
+    />
+    <style>
+      body {
+        background: #fff;
+      }
+      /* ステップバー */
+      .progressbar {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      .progressbar li {
+        position: relative;
+        list-style-type: none;
+        text-align: center;
+        text-transform: uppercase;
+        width: 33.333%;
+        color: #999999;
+        font-weight: bold;
+      }
+      .progressbar li:before {
+        display: block;
+        width: 18px;
+        height: 18px;
+        margin: 7px auto 20px auto;
+        content: "";
+        text-align: center;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+      }
+      .progressbar li:after {
+        position: absolute;
+        z-index: -1;
+        top: 1em;
+        left: -50%;
+        width: 100%;
+        height: 2px;
+        content: "";
+        background-color: #f5f5f5;
+      }
+      .progressbar li:first-child:after {
+        content: none;
+      }
+      .progressbar li.active,
+      .progressbar li.complete {
+        color: #0e5fb1;
+      }
+      .progressbar li.active:before,
+      .progressbar li.complete:before {
+        background-color: #0e5fb1;
+      }
+      .progressbar li.active:after,
+      .progressbar li.complete:after {
+        background-color: #0e5fb1;
+      }
+
+      @media screen and (max-width: 480px) {
+        .progressbar li:after {
+          top: 2em;
+        }
+      }
+
+      /* ステップバーの装飾 */
+      ul {
+        margin: 40px 0 !important;
+      }
+      body {
+        margin: 40px 20px;
+      }
+
+      #app {
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="progressbar">
+      <li class="complete">希望条件</li>
+      <li class="complete">ご経験</li>
+      <li class="active">経歴書アップロード</li>
+    </ul>
+
+    <!-- デフォルトで必要な要素 -->
+    <div
+      class="mktoContent"
+      style="font-family: helvetica, arial, sans-serif; font-size: 14px"
+    ></div>
+
+    <!-- マルケトのトークンを非表示フィールドとして利用する-->
+    <input
+      type="hidden"
+      id="mktoEmail"
+      value="{{lead.Email Address:default=none}}"
+    />
+    <input type="hidden" id="mktoId" value="{{lead.Id}}" />
+
+    <!-- この要素にVueがDOMを生成する-->
+    <div id="app"></div>
+
+    <!-- マルケトのフォームパーツで、Vueの中でこのオブジェクトに対して、submitイベントを呼ぶ。-->
+    <script
+      type="text/javascript"
+      src="//lp.furien.jp/js/forms2/js/forms2.min.js"
+    ></script>
+    <form id="mktoForm_1899" style="display: none" />
+    <script>
+      MktoForms2.loadForm("//lp.furien.jp", "791-NMK-265", 1899);
+    </script>
+
+    <!-- Vueの中でEmailオブジェクトを読み込むために利用-->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <!-- キャッシュ回避のためのmanifestファイルからファイル名を参照しcssとvueのjsファイルを動的に読み込む-->
+    <script>
+      fetch(
+        "https://pro-soichiro.github.io/marketo-file-form-test/manifest.json"
+      )
+        .then((response) => response.json())
+        .then((manifest) => {
+          // CSSの動的追加
+          let cssLink = document.createElement("link");
+          cssLink.rel = "stylesheet";
+          cssLink.href = `https://pro-soichiro.github.io/marketo-file-form-test/${manifest["index.css"]["file"]}`;
+          document.head.appendChild(cssLink);
+
+          // JSの動的追加
+          let jsScript = document.createElement("script");
+          jsScript.type = "module";
+          jsScript.crossOrigin = "";
+          jsScript.src = `https://pro-soichiro.github.io/marketo-file-form-test/${manifest["index.html"]["file"]}`;
+          document.body.appendChild(jsScript);
+        });
+    </script>
+  </body>
+</html>
