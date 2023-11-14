@@ -142,7 +142,9 @@ async function postData() {
               }
               // eslint-disable-next-line no-undef
               MktoForms2.whenReady(function (form) {
-                form.addHiddenFields(values)
+                form.onSubmit((form) => {
+                  form.addHiddenFields(values);
+                });
                 form.submit()
               })
             } else {
